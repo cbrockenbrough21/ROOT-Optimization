@@ -1,0 +1,14 @@
+*.root
+*.txt
+**/*.root
+**/*.txt
+**/*.jpg
+**/*.jpeg
+**/*.png
+/build/
+/inst/
+StructWrite/build/
+StructWrite/inst/
+VectorWrite/build/
+VectorWrite/inst/
+
