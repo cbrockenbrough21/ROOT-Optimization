@@ -44,7 +44,7 @@ add_executable(VectorWrite VectorWrite.cc)  # Specify your executable name and s
 target_link_libraries(VectorWrite vector_write_example ${ROOT_LINK})  # Link against your library and ROOT
 
 # Install the executable
-install(TARGETS VectorWrite DESTINATION /seaquest/users/mhossain/Universal/VectorWrite/maker)
+install(TARGETS VectorWrite DESTINATION ${PROJECT_SOURCE_DIR}/../maker)
 
 
 # Install the library

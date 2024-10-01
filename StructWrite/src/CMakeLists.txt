@@ -44,7 +44,7 @@ add_executable(StructWrite StructWrite.cc)  # Specify your executable name and s
 target_link_libraries(StructWrite struct_write_example ${ROOT_LINK})  # Link against your library and ROOT
 
 # Install the executable
-install(TARGETS StructWrite DESTINATION /seaquest/users/mhossain/Universal/StructWrite/maker)
+install(TARGETS StructWrite DESTINATION ${PROJECT_SOURCE_DIR}/../maker)
 
 
 # Install the library

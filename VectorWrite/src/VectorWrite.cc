@@ -50,7 +50,7 @@ int main() {
     writer.OpenFile("LinVector.root", m_file, m_tree);
 
     // Open the existing file with the tree to read from
-    TFile* file = TFile::Open("/seaquest/users/mhossain/Universal/gen/vector_sim.root");
+    TFile* file = TFile::Open("../../gen/vector_sim.root");
     if (!file || file->IsZombie()) {
         std::cerr << "Failed to open vector_sim.root" << std::endl;
         return 1; // Exit if the file can't be opened

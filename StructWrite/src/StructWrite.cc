@@ -66,7 +66,7 @@ int main() {
 
 	writer.OpenFile("struct_sim.root", m_file, m_tree);
 
-	TFile *file = TFile::Open("/seaquest/users/mhossain/Universal/gen/vector_sim.root");
+	TFile *file = TFile::Open("../../gen/vector_sim.root");
 	TTree *tree = (TTree*)file->Get("tree");
 
 	std::vector<int> *hit_id = nullptr;
