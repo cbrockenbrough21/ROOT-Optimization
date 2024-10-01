@@ -18,6 +18,7 @@ git clone https://github.com/forhadnmsu/Universal.git
 In the ```setup.sh``` script use the below line if you would like to run the code in Rivanna machine: 
 
 ```source /project/ptgroup/spinquest/this-e1039.sh```
+
 ```#source /exp/seaquest/app/software/osg/users/$USER/e1039/core/this-e1039.sh```
 
 ## Generating the Toy Data
