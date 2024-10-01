@@ -1,6 +1,5 @@
 *.root
 **/*.root
-**/*.txt
 **/*.jpg
 **/*.jpeg
 **/*.png
