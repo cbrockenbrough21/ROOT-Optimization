@@ -28,9 +28,15 @@ public:
     std::vector<double> py_vtx;
     std::vector<double> pz_vtx;
     //TMatrixD *new_matrix;
-int fpga_bits[5];  // Array for FPGA bits
-int nim_bits[5];   // Array for NIM bits
-int run_id, spill_id, event_id;
+    int fpga_bits[5];  // Array for FPGA bits
+    int nim_bits[5];   // Array for NIM bits
+    int run_id, spill_id, event_id;
+
+    // Compression settings for ROOT output
+    int compression_algo = 1;
+    int compression_level = 1;
+    int m_basket_size = 32000;
+    int m_auto_flush = 1000;
 
 };
 #endif // VECTORWRITE_H

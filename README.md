@@ -6,13 +6,7 @@
 - **Scalability**
 - **Fast Read/Write Speed**
 
-## Clone the Repository
 
-First, clone the repository:
-
-```
-cd /path/to/your_working_directory
-git clone https://github.com/forhadnmsu/Universal.git
 ```
 
 In the ```setup.sh``` script use the below line if you would like to run the code in Rivanna machine: 

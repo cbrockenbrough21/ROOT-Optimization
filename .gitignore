@@ -3,10 +3,10 @@
 **/*.jpg
 **/*.jpeg
 **/*.png
-/build/
-/inst/
-StructWrite/build/
-StructWrite/inst/
-VectorWrite/build/
-VectorWrite/inst/
+*.txt
 
+.vscode
+
+# Ignore all directories named 'build' and 'inst' anywhere
+build/
+inst/
