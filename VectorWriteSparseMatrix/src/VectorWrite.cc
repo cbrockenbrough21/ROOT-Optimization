@@ -181,7 +181,7 @@ int main(int argc, char *argv[]) {
             
                     // Only write non-zero values to new_matrix
                     if (value != 0) {
-                        (*writer.new_matrix)(row, col) = value;
+                        writer.new_matrix->operator()(row, col) = value;
                         //std::cout << "Non-zero value at (" << row << ", " << col << "): " << value << std::endl;
                     }
                 }

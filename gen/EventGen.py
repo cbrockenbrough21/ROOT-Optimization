@@ -151,4 +151,4 @@ def create_root_file(filename, n_events):
     file.Close()
 
 # Create a ROOT file with n events
-create_root_file("vector_sim100k.root", 100000)
+create_root_file("vector_sim.root", 5000)

@@ -9,13 +9,14 @@ CSV_FILE="struct_compression_test_results.csv"
 : > $CSV_FILE
 
 # Write the header to the CSV file
-echo "Algorithm,Compression Level,Basket Size,AutoFlush,File Size (MB),Write Time (seconds),Read Time (seconds)" > $CSV_FILE
+echo "Algorithm,Compression Level,Basket Size,AutoFlush,Branch Split,File Size (MB),Write Time (seconds),Read Time (seconds)" > $CSV_FILE
 
-# Define the compression algorithms, levels, basket sizes, and autoflush values you want to test
+# Define the compression algorithms, levels, basket sizes, autoflush, and branch split values you want to test
 algorithms=(1 2)
 compression_levels=(1 5)
 basket_sizes=(64000)
 autoflush_values=(2000)  # Add your desired AutoFlush values here
+branch_splits=(0 1 99) # Common branch splitting settings: 0 = off, 1 = simple splitting, 99 = full splitting
 
 # Function to time the reading of a ROOT file
 time_reading() {
@@ -25,7 +26,7 @@ time_reading() {
   echo "$read_time"
 }
 
-# Loop through each combination of compression algorithm, compression level, basket size, and autoflush
+# Loop through each combination of compression algorithm, compression level, basket size, autoflush, and branch split
 for algo in "${algorithms[@]}"
 do
   for level in "${compression_levels[@]}"
@@ -34,32 +35,35 @@ do
     do
       for autoflush in "${autoflush_values[@]}"
       do
-        # Print the current test case to log
-        echo "Testing: Algorithm $algo, Compression Level $level, Basket Size $basket_size, AutoFlush $autoflush" | tee -a $LOG_FILE
-        
-        # Run the StructWrite and capture the output
-        result=$(./StructWrite $algo $level $basket_size $autoflush)
+        for branch_split in "${branch_splits[@]}"
+        do
+          # Print the current test case to log
+          echo "Testing: Algorithm $algo, Compression Level $level, Basket Size $basket_size, AutoFlush $autoflush, Branch Split $branch_split" | tee -a $LOG_FILE
+          
+          # Run the StructWrite with branch_split as an additional argument and capture the output
+          result=$(./StructWrite $algo $level $basket_size $autoflush $branch_split)
 
-        # Extract file size and write time from the result using simple patterns
-        file_size=$(echo "$result" | grep -oP 'FILE_SIZE=\K[0-9.]+')
-        write_time=$(echo "$result" | grep -oP 'WRITE_TIME=\K[0-9.]+')
+          # Extract file size and write time from the result using simple patterns
+          file_size=$(echo "$result" | grep -oP 'FILE_SIZE=\K[0-9.]+')
+          write_time=$(echo "$result" | grep -oP 'WRITE_TIME=\K[0-9.]+')
 
-        # If we successfully extracted both values, proceed to test reading
-        if [[ -n "$file_size" && -n "$write_time" ]]; then
-          # Time the reading of the new ROOT file
-          read_time=$(time_reading struct_sim.root)
+          # If we successfully extracted both values, proceed to test reading
+          if [[ -n "$file_size" && -n "$write_time" ]]; then
+            # Time the reading of the new ROOT file
+            read_time=$(time_reading struct_sim.root)
 
-          # If reading time is successful, log it; otherwise, mark it as ERROR
-          if [[ -n "$read_time" ]]; then
-            echo "$algo,$level,$basket_size,$autoflush,$file_size,$write_time,$read_time" >> $CSV_FILE
+            # If reading time is successful, log it; otherwise, mark it as ERROR
+            if [[ -n "$read_time" ]]; then
+              echo "$algo,$level,$basket_size,$autoflush,$branch_split,$file_size,$write_time,$read_time" >> $CSV_FILE
+            else
+              echo "$algo,$level,$basket_size,$autoflush,$branch_split,$file_size,$write_time,ERROR" >> $CSV_FILE
+            fi
           else
-            echo "$algo,$level,$basket_size,$autoflush,$file_size,$write_time,ERROR" >> $CSV_FILE
+            echo "$algo,$level,$basket_size,$autoflush,$branch_split,ERROR,ERROR,ERROR" >> $CSV_FILE
           fi
-        else
-          echo "$algo,$level,$basket_size,$autoflush,ERROR,ERROR,ERROR" >> $CSV_FILE
-        fi
-        
-        echo "-----------------------------------------" | tee -a $LOG_FILE
+          
+          echo "-----------------------------------------" | tee -a $LOG_FILE
+        done
       done
     done
   done

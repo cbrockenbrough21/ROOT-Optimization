@@ -1,3 +1,4 @@
+#include <TStreamerInfo.h>
 #include "StructWrite.h"
 #include <iostream>
 #include <TFile.h>
@@ -83,7 +84,7 @@ int main(int argc, char *argv[]) {
     writer.OpenFile("struct_sim.root", m_file, m_tree);
 
 
-    TStreamerInfo::Optimize(false);  // Disable optimization for full info
+    //TStreamerInfo::Optimize(false);  // Disable optimization for full info
     // Embed the streamer information for custom classes
     gROOT->GetClass("EventData")->GetStreamerInfo();
     gROOT->GetClass("HitData")->GetStreamerInfo();
@@ -190,6 +191,10 @@ int main(int argc, char *argv[]) {
     }
 
     m_file->Write("", TObject::kOverwrite);
+    m_file->WriteObject(gROOT->GetClass("EventData")->GetStreamerInfo(), "EventData");
+    m_file->WriteObject(gROOT->GetClass("HitData")->GetStreamerInfo(), "HitData");
+    m_file->WriteObject(gROOT->GetClass("TrackData")->GetStreamerInfo(), "TrackData");  
+
     m_file->Close();
     file->Close();
     delete file;

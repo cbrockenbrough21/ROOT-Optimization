@@ -12,9 +12,9 @@ CSV_FILE="vector_compression_test_results.csv"
 echo "Algorithm,Compression Level,Basket Size,AutoFlush,File Size (MB),Write Time (seconds),Read Time (seconds)" > $CSV_FILE
 
 # Define the compression algorithms, levels, basket sizes, and autoflush values you want to test
-algorithms=(1 2 4 5)
+algorithms=(1 2)
 compression_levels=(1 5 9)
-basket_sizes=(32000 64000)
+basket_sizes=(64000)
 autoflush_values=(2000)  # Add your desired AutoFlush values here
 
 # Function to time the reading of a ROOT file

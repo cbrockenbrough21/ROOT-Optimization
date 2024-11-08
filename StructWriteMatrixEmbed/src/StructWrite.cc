@@ -1,3 +1,4 @@
+#include <TStreamerInfo.h>
 #include "StructWrite.h"
 #include <iostream>
 #include <TFile.h>
@@ -49,6 +50,8 @@ void StructWrite::OpenFile(const std::string &file_name, TFile *&m_file, TTree *
     m_tree->Branch("evt", &evt, branch_split);
     m_tree->Branch("list_hit", &list_hit, branch_split);
     m_tree->Branch("list_trk", &list_trk, branch_split);
+
+    m_tree->Branch("evt.matrix", "TMatrixD", &evt.matrix, branch_split);
 
     m_tree->SetAutoFlush(m_auto_flush);
     m_tree->SetBasketSize("*", m_basket_size);
@@ -151,9 +154,6 @@ int main(int argc, char *argv[]) {
 
         writer.evt.matrix->Zero();
         if (matrix) {
-            int rows = matrix->GetNrows();
-            int cols = matrix->GetNcols();
-            std::cout << "Matrix dimensions: " << rows << " rows, " << cols << " columns." << std::endl;
             for (int row = 0; row < matrix->GetNrows(); row++) {
                 for (int col = 0; col < matrix->GetNcols(); col++) {
                     (*writer.evt.matrix)(row, col) = (*matrix)(row, col);
@@ -189,7 +189,13 @@ int main(int argc, char *argv[]) {
     }
 
     m_file->Write("", TObject::kOverwrite);
+    m_file->WriteObject(gROOT->GetClass("EventData")->GetStreamerInfo(), "EventData");
+    m_file->WriteObject(gROOT->GetClass("HitData")->GetStreamerInfo(), "HitData");
+    m_file->WriteObject(gROOT->GetClass("TrackData")->GetStreamerInfo(), "TrackData");  
     m_file->Close();
+    
+    file->Close();
+    delete file;
 
     // Stop the timer
     timer.Stop();
