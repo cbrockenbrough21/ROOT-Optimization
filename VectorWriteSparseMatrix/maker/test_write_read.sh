@@ -2,7 +2,7 @@
 
 # Define the output log file and the CSV file
 LOG_FILE="vector_compression_test_results.txt"
-CSV_FILE="vector_compression_test_results.csv"
+CSV_FILE="20%_vector_compression_test_results.csv"
 
 # Clear the log file and CSV file if they exist
 : > $LOG_FILE
@@ -12,7 +12,7 @@ CSV_FILE="vector_compression_test_results.csv"
 echo "Algorithm,Compression Level,Basket Size,AutoFlush,File Size (MB),Write Time (seconds),Read Time (seconds)" > $CSV_FILE
 
 # Define the compression algorithms, levels, basket sizes, and autoflush values you want to test
-algorithms=(1 2)
+algorithms=(1)
 compression_levels=(1 5 9)
 basket_sizes=(64000)
 autoflush_values=(2000)  # Add your desired AutoFlush values here
