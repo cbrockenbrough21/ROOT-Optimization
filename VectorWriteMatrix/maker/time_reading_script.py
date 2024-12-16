@@ -2,8 +2,6 @@ import ROOT
 import sys
 import time
 
-ROOT.gSystem.Load("libstruct_write_example.so")
-
 def time_reading(root_file):
     # Open the ROOT file
     file = ROOT.TFile.Open(root_file, "READ")

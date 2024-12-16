@@ -1,0 +1,4 @@
+Algorithm,Compression Level,Basket Size,AutoFlush,File Size (MB),Write Time (seconds),Read Time (seconds)
+1,1,64000,2000,154.806,34.3056,1.404
+1,5,64000,2000,151.666,40.6159,1.535
+1,9,64000,2000,149.114,139.814,1.413
